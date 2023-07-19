@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        function showLocation() {
+            let data = document?.location?.host
+            if(!data) data = undefined
+            document.querySelector('#location').innerHTML = data
+
+            const action = data + ':3000/test'
+            document.querySelector('#formTest').action = action
+            document.querySelector('#action').innerHTML = action
+        }
+    </script>
+</head>
+
+
+<body>
+    
+    <form method="get" action="http://localhost:3000/test">
+        http://localhost:3000/test
+        <input type="submit"/>
+    </form>
+
+    <form id="formTest" method="get" action="#">
+        <div id="action"></div>
+        <input type="submit"/>
+    </form>
+
+    <button onClick=showLocation()>show location</button>
+    <div style="display: flex">location: <div id="location">?</div></div>
+</body>
+
+<script>
+
+</script>
+
+</html>
