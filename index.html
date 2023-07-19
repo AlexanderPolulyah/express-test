@@ -16,25 +16,18 @@
             const action = data + ':3000/test'
             baseUrl = action
 
-            document.querySelector('#formTest').action = action
-            document.querySelector('#action').innerHTML = action
+            document.querySelector('#formTestGet').action = action + 'Get'
+            document.querySelector('#formTestPost').action = action + 'Post'
+            document.querySelector('#actionGet').innerHTML = action + 'Get'
+            document.querySelector('#actionPost').innerHTML = action + 'Post'
         }
         async function sendTest(url) {
             // if(!url) url = 'http://localhost:3000/test'
             console.log(url)
             let data = await fetch(url, {method: 'POST'})
-            // console.log(data.body)
-
             data = await data.body.getReader().read()
-            // const reader = data.body.getReader()
-            // data = await reader.read()
-            // console.log(reader)
-            // console.log(data.value)
             data = new TextDecoder("utf-8").decode(data.value);
             console.log(data)
-            // console.log(data.value.map(v => String.prototype.charAt(v)))
-            // data = await JSON.parse(data.body)
-
             document.querySelector('#sendTestResult').innerHTML = data            
         }
     </script>
@@ -43,13 +36,21 @@
 
 <body>
     
-    <form method="post" action="/test">
-        <strike>http://localhost:3000</strike>/test
+    <form method="get" action="/testGet">
+        <strike>get http://localhost:3000</strike>/testGet
+        <input type="submit"/>
+    </form>
+    <form method="post" action="/testPost">
+        <strike>post http://localhost:3000</strike>/testPost
         <input type="submit"/>
     </form>
 
-    <form id="formTest" method="post" action="#">
-        <div id="action"></div>
+    <form id="formTestGet" method="get" action="#">
+        <div id="actionGet"></div>
+        <input type="submit"/>
+    </form>
+    <form id="formTestPost" method="post" action="#">
+        <div id="actionPost"></div>
         <input type="submit"/>
     </form>
 
