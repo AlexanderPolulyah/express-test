@@ -7,14 +7,35 @@
     <title>Document</title>
 
     <script>
+        let baseUrl = undefined
         function showLocation() {
             let data = document?.location?.host
             if(!data) data = undefined
             document.querySelector('#location').innerHTML = data
 
             const action = data + ':3000/test'
+            baseUrl = action
+
             document.querySelector('#formTest').action = action
             document.querySelector('#action').innerHTML = action
+        }
+        async function sendTest(url) {
+            // if(!url) url = 'http://localhost:3000/test'
+            console.log(url)
+            let data = await fetch(url, {method: 'POST'})
+            // console.log(data.body)
+
+            data = await data.body.getReader().read()
+            // const reader = data.body.getReader()
+            // data = await reader.read()
+            // console.log(reader)
+            // console.log(data.value)
+            data = new TextDecoder("utf-8").decode(data.value);
+            console.log(data)
+            // console.log(data.value.map(v => String.prototype.charAt(v)))
+            // data = await JSON.parse(data.body)
+
+            document.querySelector('#sendTestResult').innerHTML = data            
         }
     </script>
 </head>
@@ -34,10 +55,10 @@
 
     <button onClick=showLocation()>show location</button>
     <div style="display: flex">location: <div id="location">?</div></div>
+
+    <button onclick="sendTest(baseUrl)">sendTest over fetch on location</button>
+    <button onclick="sendTest('http://localhost:3000/test')">sendTest over fetch on http://localhost:3000/test</button>
+    <div id="sendTestResult"></div>
 </body>
-
-<script>
-
-</script>
 
 </html>
